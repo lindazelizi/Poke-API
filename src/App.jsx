@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import Quiz from './components/Quiz';
+import PokemonApplication from './components/PokemonApplication';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [showPokedex, setShowPokedex] = useState(false);
+  const [score, setScore] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [showResult, setShowResult] = useState(false);
+  const totalQuestions = 15;
+  const startQuiz = () => {
+    setShowQuiz(true);
+    setShowPokedex(false);
+  };
+  const restart = () => {
+    setScore(0);
+    setQuestionNumber(1);
+    setShowResult(false);
+    setShowQuiz(false);
+    setShowPokedex(false);
+  };
+  const handleAnswer = (isCorrect) => {
+    if (isCorrect) {
+      setScore(prev => prev + 1);
+    }
+
+    if (questionNumber < totalQuestions) {
+      setQuestionNumber(prev => prev + 1);
+    } else {
+      setShowResult(true);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container" style={{ textAlign: 'center', padding: '2rem' }}>
+      <h1>Pokémon Quiz</h1>
+
+      {!showQuiz && !showResult && !showPokedex && (
+        <>
+          <p>Testa dina kunskaper om första generationens Pokémon!</p>
+          <button onClick={() => setShowPokedex(true)} style={{ margin: '1rem' }}>📖 Plugga först</button>
+          <button onClick={startQuiz} style={{ margin: '1rem' }}>🎮 Starta Quiz</button>
+        </>
+      )}
+      {showPokedex && !showQuiz && !showResult && (
+        <>
+          <h2>Pokédex – lär dig mer om Pokémon</h2>
+          <PokemonApplication />
+          <button onClick={startQuiz} style={{ marginTop: '2rem' }}>Börja Quizet</button>
+        </>
+      )}
+      {showQuiz && !showResult && (
+        <>
+          <p>Fråga {questionNumber} av {totalQuestions}</p>
+          <Quiz onNext={handleAnswer} />
+        </>
+      )}
+      {showResult && (
+        <div>
+          <h2>Resultat</h2>
+          <p>Du fick {score} av {totalQuestions} rätt.</p>
+          <button onClick={restart}>Spela igen</button>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
