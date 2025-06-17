@@ -50,7 +50,7 @@ function Quiz({ onNext }) {
 
   return (
     <div>
-      <h2>Vem är Pokémonen?</h2>
+      <h2>Vilken Pokemon?</h2>
 
       {loading && <p>Laddar fråga...</p>}
 
@@ -97,7 +97,7 @@ function Quiz({ onNext }) {
           {selected && (
             <div style={{ marginTop: "1rem" }}>
               <p>{isCorrect ? "Rätt!" : `Fel! Rätt svar: ${pokemon.name}`}</p>
-              <button onClick={handleNext}>Nästa Pokémon</button>
+              <button onClick={handleNext}>Nästa</button>
             </div>
           )}
         </div>

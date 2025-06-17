@@ -40,13 +40,13 @@ function App() {
       {!showQuiz && !showResult && !showPokedex && (
         <>
           <p>Testa dina kunskaper om första generationens Pokémon!</p>
-          <button onClick={() => setShowPokedex(true)} style={{ margin: '1rem' }}>📖 Plugga först</button>
-          <button onClick={startQuiz} style={{ margin: '1rem' }}>🎮 Starta Quiz</button>
+          <button onClick={() => setShowPokedex(true)} style={{ margin: '1rem' }}>Lär dig mer</button>
+          <button onClick={startQuiz} style={{ margin: '1rem' }}>Starta Quiz</button>
         </>
       )}
       {showPokedex && !showQuiz && !showResult && (
         <>
-          <h2>Pokédex – lär dig mer om Pokémon</h2>
+          <h2>Lär dig mer om Pokémons</h2>
           <PokemonApplication />
           <button onClick={startQuiz} style={{ marginTop: '2rem' }}>Börja Quizet</button>
         </>
